@@ -1,13 +1,19 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-</p>
+<div class="welcome-container">
+  <h1>Welcome to virtual-forest!</h1>
+  <a href="/forest">Start</a>
+</div>
 
 <style>
-  h1,
-  p {
+  :global(:root) {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
+  }
+
+  .welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>
