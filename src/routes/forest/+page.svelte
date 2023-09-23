@@ -2,6 +2,17 @@
   import { onMount } from "svelte";
   let src = "images/forest.png";
   let canvas;
+  let forestItems = [
+    "Grey Wolf",
+    "White-tailed Deer",
+    "Blue Jays",
+    "Spruce Trees",
+    "Northern Red Oak Trees",
+    "Grass",
+    "Redcurrant",
+  ];
+  let foundItems = 0;
+  let score = (foundItems / forestItems.length) * 100;
 
   onMount(() => {
     const ctx = canvas.getContext("2d");
@@ -22,6 +33,8 @@
       y: ctx.clientY - rect.top,
     };
   }
+
+  function updateScore() {}
 </script>
 
 <canvas bind:this={canvas} width="100%" height="100h" />
