@@ -13,6 +13,14 @@
   ];
   let foundItems = 0;
   let score = (foundItems / forestItems.length) * 100;
+  let populationCounts = new Map();
+  populationCounts.set("Grey Wolf", 10);
+  populationCounts.set("White-tailed Deer", 25);
+  populationCounts.set("Blue Jays", 100);
+  populationCounts.set("Spruce Trees", 50);
+  populationCounts.set("Northern Red Oak Trees", 50);
+  populationCounts.set("Grass", 1000);
+  populationCounts.set("Redcurrant", 10);
 
   onMount(() => {
     const ctx = canvas.getContext("2d");
@@ -27,17 +35,33 @@
   });
 
   function getMousePos(canvas, ctx) {
-    var rect = canvas.getBoundingClientRect();
     return {
-      x: ctx.clientX - rect.left,
-      y: ctx.clientY - rect.top,
+      x: ctx.clientX,
+      y: ctx.clientY,
     };
   }
 
   function updateScore() {}
 </script>
 
-<canvas bind:this={canvas} width="100%" height="100h" />
+<div class="container">
+  <h1>virtual-forest</h1>
+  <div class="population-counts">
+    <p>Population Counts:</p>
+    {#each [...populationCounts] as [key, value]}
+      <p>{key}: {value}</p>
+    {/each}
+  </div>
+  <canvas bind:this={canvas} width="600px" height="1200px" />
+  <div class="slider-container">
+    {#each [...populationCounts] as [key, value]}
+      <div class="slider">
+        <input type="range" id={key} name={key} min="0" max="1000" />
+        <label for={key}>{key}</label>
+      </div>
+    {/each}
+  </div>
+</div>
 
 <style>
   :global(:root) {
@@ -48,11 +72,35 @@
 
   canvas {
     background-image: url("images/forest.png");
-    height: 100%;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%;
-    height: 100vh;
+    width: 1200px;
+    height: 600px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .population-counts {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .slider-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+  }
+
+  .slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
