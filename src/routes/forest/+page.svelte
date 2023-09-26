@@ -3,23 +3,70 @@
   let src = "images/forest.png";
   let canvas;
   let ctx;
-  let forestItems2 = [
-    {name: "Grey Wolf", x: 316, y: 643, width: 215, height: 100, isHighlighted:false},
-    {name: "White-tailed Deer", x: 996, y: 596, width: 170, height: 100, isHighlighted:false},
-    {name: "Blue Jays", x: 137, y: 140, width: 499, height: 162, isHighlighted:false},
-    {name: "Spruce Trees", x: 200, y: 620, width: 109, height: 111, isHighlighted:false},
-    {name: "Northern Red Oak Trees", x: 652, y: 147, width: 350, height: 500, isHighlighted:false},
-    {name: "Grass", x: 727, y: 686, width: 225, height: 100, isHighlighted:false},
-    {name: "Redcurrant", x: 1270, y: 627, width: 57, height: 67, isHighlighted:false},
-  ];
   let forestItems = [
-    "Grey Wolf",
-    "White-tailed Deer",
-    "Blue Jays",
-    "Spruce Trees",
-    "Northern Red Oak Trees",
-    "Grass",
-    "Redcurrant",
+    {
+      name: "Grey Wolf",
+      x: 316,
+      y: 643,
+      width: 215,
+      height: 100,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "White-tailed Deer",
+      x: 996,
+      y: 596,
+      width: 170,
+      height: 100,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "Blue Jays",
+      x: 137,
+      y: 140,
+      width: 499,
+      height: 162,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "Spruce Trees",
+      x: 200,
+      y: 620,
+      width: 109,
+      height: 111,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "Northern Red Oak Trees",
+      x: 652,
+      y: 147,
+      width: 350,
+      height: 500,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "Grass",
+      x: 727,
+      y: 686,
+      width: 225,
+      height: 100,
+      isHighlighted: false,
+      found: false,
+    },
+    {
+      name: "Redcurrant",
+      x: 1270,
+      y: 627,
+      width: 57,
+      height: 67,
+      isHighlighted: false,
+      found: false,
+    },
   ];
   let foundItems = 0;
   let score = (foundItems / forestItems.length) * 100;
@@ -37,8 +84,8 @@
     canvas.addEventListener(
       "click",
       function (ctx) {
-        var mousePos = getMousePos(canvas, ctx);
-        alert(mousePos.x + "," + mousePos.y);
+        var mousePos = updateScore(canvas, ctx);
+        // TODO: show item info
       },
       false
     );
@@ -53,7 +100,7 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Check if the mouse is over any forest item in forestItems2
-    for (const item of forestItems2) {
+    for (const item of forestItems) {
       if (
         mousePos.x >= item.x &&
         mousePos.x <= item.x + item.width &&
@@ -65,7 +112,6 @@
       } else {
         item.isHighlighted = false; // Reset highlighting if not over the item
       }
-      
     }
   }
 
@@ -74,8 +120,6 @@
     ctx.fillRect(item.x - 160, item.y - 150, item.width, item.height);
   }
 
-
-
   function getMousePos(canvas, ctx) {
     return {
       x: ctx.clientX,
@@ -83,11 +127,29 @@
     };
   }
 
-  function updateScore() {}
+  function updateScore(canvas, event) {
+    const mousePos = getMousePos(canvas, event);
+
+    for (const item of forestItems) {
+      if (
+        mousePos.x >= item.x &&
+        mousePos.x <= item.x + item.width &&
+        mousePos.y >= item.y &&
+        mousePos.y <= item.y + item.height &&
+        !item.found
+      ) {
+        item.found = true;
+        foundItems += 1;
+        score = Math.floor((foundItems / forestItems.length) * 100);
+      }
+    }
+  }
 </script>
 
 <div class="container">
   <h1>virtual-forest</h1>
+  <p>Items found: {foundItems}</p>
+  <p>Score: {score}</p>
   <div class="population-counts">
     <p>Population Counts:</p>
     {#each [...populationCounts] as [key, value]}
@@ -95,7 +157,7 @@
     {/each}
   </div>
   <canvas bind:this={canvas} width="1200px" height="600px" />
-  <audio src="audio/nature.wav" autoplay loop></audio>
+  <audio src="audio/nature.wav" autoplay loop />
   <div class="slider-container">
     {#each [...populationCounts] as [key, value]}
       <div class="slider">
