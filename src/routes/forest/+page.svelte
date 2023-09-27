@@ -70,14 +70,14 @@
   ];
   let foundItems = 0;
   let score = (foundItems / forestItems.length) * 100;
-  let populationCounts = new Map();
-  populationCounts.set("Grey Wolf", 10);
-  populationCounts.set("White-tailed Deer", 25);
-  populationCounts.set("Blue Jays", 100);
-  populationCounts.set("Spruce Trees", 50);
-  populationCounts.set("Northern Red Oak Trees", 50);
-  populationCounts.set("Grass", 1000);
-  populationCounts.set("Redcurrant", 10);
+  let populationCounts = {};
+  populationCounts["Grey Wolf"] = 15;
+  populationCounts["White-tailed Deer"] = 5;
+  populationCounts["Blue Jays"] = 50;
+  populationCounts["Spruce Trees"] = 20;
+  populationCounts["Northern Red Oak Trees"] = 40;
+  populationCounts["Grass"] = 1000;
+  populationCounts["Redcurrant"] = 5;
 
   onMount(() => {
     ctx = canvas.getContext("2d");
@@ -144,6 +144,19 @@
       }
     }
   }
+
+  function sliderOnChange(event) {
+    const key = event.target.id;
+    const value = populationCounts[key];
+    console.log(`${key} slider value: ${value}`);
+    if (key === "Grey Wolf") {
+      populationCounts["White-tailed Deer"] = Math.floor(value * 0.2);
+      return;
+    }
+    if (key === "White-tailed Deer") {
+      populationCounts["Grass"] = Math.floor(value * 0.9);
+    }
+  }
 </script>
 
 <div class="container">
@@ -152,16 +165,24 @@
   <p>Score: {score}</p>
   <div class="population-counts">
     <p>Population Counts:</p>
-    {#each [...populationCounts] as [key, value]}
+    {#each Object.entries(populationCounts) as [key, value]}
       <p>{key}: {value}</p>
     {/each}
   </div>
   <canvas bind:this={canvas} width="1200px" height="600px" />
   <audio src="audio/nature.wav" autoplay loop />
   <div class="slider-container">
-    {#each [...populationCounts] as [key, value]}
+    {#each Object.entries(populationCounts) as [key, value]}
       <div class="slider">
-        <input type="range" id={key} name={key} min="0" max="1000" />
+        <input
+          type="range"
+          id={key}
+          name={key}
+          min="0"
+          max="1000"
+          bind:value={populationCounts[key]}
+          on:change={sliderOnChange}
+        />
         <label for={key}>{key}</label>
       </div>
     {/each}
@@ -194,6 +215,7 @@
   .population-counts {
     display: flex;
     flex-direction: row;
+    gap: 15px;
   }
 
   .slider-container {
