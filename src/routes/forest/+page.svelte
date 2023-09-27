@@ -6,8 +6,8 @@
   let forestItems = [
     {
       name: "Grey Wolf",
-      x: 316,
-      y: 643,
+      x: 308,
+      y: 670,
       width: 215,
       height: 100,
       isHighlighted: false,
@@ -85,6 +85,7 @@
       "click",
       function (ctx) {
         var mousePos = updateScore(canvas, ctx);
+        clickMousePos(canvas, ctx);
         // TODO: show item info
       },
       false
@@ -127,6 +128,16 @@
     };
   }
 
+  function clickMousePos(canvas, ctx) {
+    const x = ctx.clientX;
+    const y = ctx.clientY;
+    console.log(`${x}, ${y}`);
+    return {
+      x,
+      y,
+    };
+  }
+
   function updateScore(canvas, event) {
     const mousePos = getMousePos(canvas, event);
 
@@ -161,31 +172,35 @@
 
 <div class="container">
   <h1>virtual-forest</h1>
-  <p>Items found: {foundItems}</p>
-  <p>Score: {score}</p>
+  <div class="score-container">
+    <p>Items found: {foundItems}</p>
+    <p>Score: {score}</p>
+  </div>
   <div class="population-counts">
     <p>Population Counts:</p>
     {#each Object.entries(populationCounts) as [key, value]}
       <p>{key}: {value}</p>
     {/each}
   </div>
-  <canvas bind:this={canvas} width="1200px" height="600px" />
   <audio src="audio/nature.wav" autoplay loop />
-  <div class="slider-container">
-    {#each Object.entries(populationCounts) as [key, value]}
-      <div class="slider">
-        <input
-          type="range"
-          id={key}
-          name={key}
-          min="0"
-          max="1000"
-          bind:value={populationCounts[key]}
-          on:change={sliderOnChange}
-        />
-        <label for={key}>{key}</label>
-      </div>
-    {/each}
+  <div class="canvas-sliders-container">
+    <canvas bind:this={canvas} width="1200px" height="600px" />
+    <div class="slider-container">
+      {#each Object.entries(populationCounts) as [key, value]}
+        <div class="slider">
+          <input
+            type="range"
+            id={key}
+            name={key}
+            min="0"
+            max="1000"
+            bind:value={populationCounts[key]}
+            on:change={sliderOnChange}
+          />
+          <label for={key}>{key}</label>
+        </div>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -220,7 +235,7 @@
 
   .slider-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 50px;
   }
@@ -229,5 +244,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .canvas-sliders-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .score-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
   }
 </style>
