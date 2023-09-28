@@ -354,7 +354,7 @@
   <button class="Oak-button" />
 
   <OakModal bind:activateOak>
-    <h2>Northern Read Oak</h2>
+    <h2>Northern Red Oak</h2>
     <p>
       The Northern Red Oak is a quite tolerant species to urban weather
       conditions, powerful winds. It can be expected to grow in hardiness zones
