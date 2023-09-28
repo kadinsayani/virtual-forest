@@ -8,7 +8,9 @@
   import RedCurrantModal from "./RedCurrantModal.svelte";
   import SpruceModal from "./SpruceModal.svelte";
 
-  let src = "images/forest.png";
+  import forest from "$lib/images/forest.png";
+  import audio from "$lib/audio/nature.wav";
+
   let canvas;
   let ctx;
 
@@ -234,7 +236,7 @@
     <p>Items found: {foundItems}/{forestItems.length}</p>
   </div>
 
-  <audio src="audio/nature.wav" autoplay loop />
+  <audio src={audio} autoplay loop />
   <div class="canvas-sliders-container">
     <canvas bind:this={canvas} width="1200px" height="600px" />
     <div class="slider-container">
@@ -415,7 +417,7 @@
     background-image: linear-gradient(#001e00, #505050);
   }
   canvas {
-    background-image: url("images/forest.png");
+    background-image: url("$lib/images/forest.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -428,12 +430,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-
-  .population-counts {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
   }
 
   .slider-container {
