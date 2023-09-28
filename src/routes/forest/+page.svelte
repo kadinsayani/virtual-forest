@@ -29,8 +29,8 @@
   let forestItems = [
     {
       name: "Grey Wolf",
-      x: 316,
-      y: 643,
+      x: 110,
+      y: 703,
       width: 215,
       height: 100,
       isHighlighted: false,
@@ -38,8 +38,8 @@
     },
     {
       name: "White-tailed Deer",
-      x: 996,
-      y: 596,
+      x: 785,
+      y: 639,
       width: 170,
       height: 100,
       isHighlighted: false,
@@ -47,8 +47,8 @@
     },
     {
       name: "Blue Jays",
-      x: 137,
-      y: 140,
+      x: 0,
+      y: 192,
       width: 499,
       height: 162,
       isHighlighted: false,
@@ -56,8 +56,8 @@
     },
     {
       name: "Spruce Trees",
-      x: 200,
-      y: 620,
+      x: 2,
+      y: 654,
       width: 109,
       height: 111,
       isHighlighted: false,
@@ -65,8 +65,8 @@
     },
     {
       name: "Northern Red Oak Trees",
-      x: 652,
-      y: 147,
+      x: 505,
+      y: 197,
       width: 350,
       height: 500,
       isHighlighted: false,
@@ -74,8 +74,8 @@
     },
     {
       name: "Grass",
-      x: 727,
-      y: 686,
+      x: 527,
+      y: 722,
       width: 225,
       height: 100,
       isHighlighted: false,
@@ -83,8 +83,8 @@
     },
     {
       name: "Redcurrant",
-      x: 1270,
-      y: 627,
+      x: 1064,
+      y: 681,
       width: 57,
       height: 67,
       isHighlighted: false,
@@ -92,15 +92,14 @@
     },
   ];
   let foundItems = 0;
-  let score = (foundItems / forestItems.length) * 100;
-  let populationCounts = new Map();
-  populationCounts.set("Grey Wolf", 10);
-  populationCounts.set("White-tailed Deer", 25);
-  populationCounts.set("Blue Jays", 100);
-  populationCounts.set("Spruce Trees", 50);
-  populationCounts.set("Northern Red Oak Trees", 50);
-  populationCounts.set("Grass", 1000);
-  populationCounts.set("Redcurrant", 10);
+  let populationCounts = {};
+  populationCounts["Grey Wolf"] = 15;
+  populationCounts["White-tailed Deer"] = 5;
+  populationCounts["Blue Jays"] = 50;
+  populationCounts["Spruce Trees"] = 20;
+  populationCounts["Northern Red Oak Trees"] = 40;
+  populationCounts["Grass"] = 1000;
+  populationCounts["Redcurrant"] = 5;
 
   onMount(() => {
     ctx = canvas.getContext("2d");
@@ -108,6 +107,7 @@
       "click",
       function (ctx) {
         var mousePos = updateScore(canvas, ctx);
+        clickMousePos(canvas, ctx);
         // TODO: show item info
       },
       false
@@ -144,7 +144,7 @@
 
   function drawHighlight(item) {
     ctx.fillStyle = "rgba(255, 255, 0, 0.1)";
-    ctx.fillRect(item.x - 160, item.y - 150, item.width, item.height);
+    ctx.fillRect(item.x +50, item.y - 190, item.width, item.height);
   }
 
   function getMousePos(canvas, ctx) {
@@ -154,6 +154,15 @@
     };
   }
 
+  function clickMousePos(canvas, ctx) {
+    const x = ctx.clientX;
+    const y = ctx.clientY;
+    console.log(`${x}, ${y}`);
+    return {
+      x,
+      y,
+    };
+  }
 
   function updateScore(canvas, event) {
     const mousePos = getMousePos(canvas, event);
@@ -168,7 +177,6 @@
       ) {
         item.found = true;
         foundItems += 1;
-        score = Math.floor((foundItems / forestItems.length) * 100);
       }
     }
   }
@@ -217,27 +225,48 @@
     }
 
     }
+  function sliderOnChange(event) {
+    const key = event.target.id;
+    const value = populationCounts[key];
+    console.log(`${key} slider value: ${value}`);
+    if (key === "Grey Wolf") {
+      populationCounts["White-tailed Deer"] = Math.floor(value * 0.2);
+      return;
+    }
+    if (key === "White-tailed Deer") {
+      populationCounts["Grass"] = Math.floor(value * 0.9);
+    }
+  }
 </script>
 
 <div class="container">
-  <h1>virtual-forest</h1>
-  <p>Items found: {foundItems}</p>
-  <p>Score: {score}</p>
-  <div class="population-counts">
-    <p>Population Counts:</p>
-    {#each [...populationCounts] as [key, value]}
-      <p>{key}: {value}</p>
-    {/each}
+  <h1>Nature Explorer</h1>
+  <div class="score-container">
+    <p>Items found: {foundItems}/{forestItems.length}</p>
   </div>
-  <canvas bind:this={canvas} width="1200px" height="600px" />
+
   <audio src="audio/nature.wav" autoplay loop />
-  <div class="slider-container">
-    {#each [...populationCounts] as [key, value]}
-      <div class="slider">
-        <input type="range" id={key} name={key} min="0" max="1000" />
-        <label for={key}>{key}</label>
+  <div class="canvas-sliders-container">
+    <canvas bind:this={canvas} width="1200px" height="600px" />
+    <div class="slider-container">
+      <div class="population-label">
+        <p><b>Population Counts</b></p>
       </div>
-    {/each}
+      {#each Object.entries(populationCounts) as [key, value]}
+        <div class="slider">
+          <input
+            type="range"
+            id={key}
+            name={key}
+            min="0"
+            max="1000"
+            bind:value={populationCounts[key]}
+            on:change={sliderOnChange}
+          />
+          <label for={key}>{key}:{value}</label>
+        </div>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -368,8 +397,9 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
+    color: White;
+    background-image: linear-gradient(#001e00, #505050);
   }
-
   canvas {
     background-image: url("images/forest.png");
     background-position: center center;
@@ -389,18 +419,32 @@
   .population-counts {
     display: flex;
     flex-direction: row;
+    gap: 15px;
   }
 
   .slider-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 50px;
+    gap: 40px;
   }
 
   .slider {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .canvas-sliders-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .score-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
   }
 </style>
