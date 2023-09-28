@@ -69,7 +69,6 @@
     },
   ];
   let foundItems = 0;
-  let score = (foundItems / forestItems.length) * 100;
   let populationCounts = {};
   populationCounts["Grey Wolf"] = 15;
   populationCounts["White-tailed Deer"] = 5;
@@ -151,7 +150,6 @@
       ) {
         item.found = true;
         foundItems += 1;
-        score = Math.floor((foundItems / forestItems.length) * 100);
       }
     }
   }
@@ -171,21 +169,18 @@
 </script>
 
 <div class="container">
-  <h1>virtual-forest</h1>
+  <h1>Nature Explorer</h1>
   <div class="score-container">
-    <p>Items found: {foundItems}</p>
-    <p>Score: {score}</p>
+    <p>Items found: {foundItems}/{forestItems.length}</p>
   </div>
-  <div class="population-counts">
-    <p>Population Counts:</p>
-    {#each Object.entries(populationCounts) as [key, value]}
-      <p>{key}: {value}</p>
-    {/each}
-  </div>
+
   <audio src="audio/nature.wav" autoplay loop />
   <div class="canvas-sliders-container">
     <canvas bind:this={canvas} width="1200px" height="600px" />
     <div class="slider-container">
+      <div class="population-label">
+        <p><b>Population Counts</b></p>
+      </div>
       {#each Object.entries(populationCounts) as [key, value]}
         <div class="slider">
           <input
@@ -197,7 +192,7 @@
             bind:value={populationCounts[key]}
             on:change={sliderOnChange}
           />
-          <label for={key}>{key}</label>
+          <label for={key}>{key}:{value}</label>
         </div>
       {/each}
     </div>
@@ -209,8 +204,9 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
+    color: White;
+    background-image: linear-gradient(#001e00, #505050);
   }
-
   canvas {
     background-image: url("images/forest.png");
     background-position: center center;
@@ -236,8 +232,9 @@
   .slider-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 50px;
+    gap: 40px;
   }
 
   .slider {
