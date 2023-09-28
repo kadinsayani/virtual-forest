@@ -1,12 +1,12 @@
 <script>
   import { onMount } from "svelte";
-  import GreyWolfModal from './GreyWolfModal.svelte';
-  import BlueJayModal from './BlueJayModal.svelte';
-  import DeerModal from './DeerModal.svelte';
-  import GrassModal from './GrassModal.svelte';
-  import OakModal from './OakModal.svelte';
-  import RedCurrantModal from './RedCurrantModal.svelte';
-  import SpruceModal from './SpruceModal.svelte';
+  import GreyWolfModal from "./GreyWolfModal.svelte";
+  import BlueJayModal from "./BlueJayModal.svelte";
+  import DeerModal from "./DeerModal.svelte";
+  import GrassModal from "./GrassModal.svelte";
+  import OakModal from "./OakModal.svelte";
+  import RedCurrantModal from "./RedCurrantModal.svelte";
+  import SpruceModal from "./SpruceModal.svelte";
 
   let src = "images/forest.png";
   let canvas;
@@ -24,7 +24,6 @@
   let activateOak = false;
   let activateGrass = false;
   let activateRedCurrant = false;
-
 
   let forestItems = [
     {
@@ -117,7 +116,6 @@
 
     //Add event listener for modal boxes
     canvas.addEventListener("click", activateModal);
-
   });
 
   function handleMouseMove(event) {
@@ -144,7 +142,7 @@
 
   function drawHighlight(item) {
     ctx.fillStyle = "rgba(255, 255, 0, 0.1)";
-    ctx.fillRect(item.x +50, item.y - 190, item.width, item.height);
+    ctx.fillRect(item.x + 50, item.y - 190, item.width, item.height);
   }
 
   function getMousePos(canvas, ctx) {
@@ -181,50 +179,41 @@
     }
   }
 
-
-  function activateModal(event){
+  function activateModal(event) {
     const mousePos = getMousePos(canvas, event);
 
-  // Check if the mouse is over any forest item in forestItems2
+    // Check if the mouse is over any forest item in forestItems2
     for (const item of forestItems) {
       if (
         mousePos.x >= item.x &&
         mousePos.x <= item.x + item.width &&
         mousePos.y >= item.y &&
         mousePos.y <= item.y + item.height
-      ) 
-      {
+      ) {
         xMax = item.x + item.width;
         xMin = item.x;
         yMax = item.y + item.height;
         yMin = item.y;
         //activateGreyWolf = true;
-        if(item.name === "Grey Wolf"){
+        if (item.name === "Grey Wolf") {
           activateGreyWolf = true;
           drawHighlight(item);
-        }
-        else if(item.name === "White-tailed Deer"){
+        } else if (item.name === "White-tailed Deer") {
           activateDeer = true;
-        }
-        else if(item.name === "Blue Jays"){
+        } else if (item.name === "Blue Jays") {
           activateBlueJay = true;
-        }
-        else if(item.name === "Spruce Trees"){
+        } else if (item.name === "Spruce Trees") {
           activateSpruce = true;
-        }
-        else if(item.name === "Northern Red Oak Trees"){
+        } else if (item.name === "Northern Red Oak Trees") {
           activateOak = true;
-        }
-        else if(item.name === "Grass"){
+        } else if (item.name === "Grass") {
           activateGrass = true;
-        }
-        else if(item.name === "Redcurrant"){
+        } else if (item.name === "Redcurrant") {
           activateRedCurrant = true;
         }
-      } 
+      }
     }
-
-    }
+  }
   function sliderOnChange(event) {
     const key = event.target.id;
     const value = populationCounts[key];
@@ -270,127 +259,152 @@
   </div>
 </div>
 
-
 <!--Grey wolf modal content-->
 {#if activateGreyWolf}
-<button class="greyWolf-button">  </button>
+  <button class="greyWolf-button" />
 
   <GreyWolfModal bind:activateGreyWolf>
-    <h2>Gray Wolf </h2>
-    <p>Gray wolf, (Canis lupus), also called timber wolf, largest wild member of the dog family (Canidae). It inhabits vast areas of the Northern Hemisphere. Between 5 and 24 subspecies of gray wolves are recognized in North America and 7 to 12 are recognized in Eurasia, with 1 in Africa. Wolves were domesticated several thousand years ago, and selective breeding produced dogs.
+    <h2>Gray Wolf</h2>
+    <p>
+      Gray wolf, (Canis lupus), also called timber wolf, largest wild member of
+      the dog family (Canidae). It inhabits vast areas of the Northern
+      Hemisphere. Between 5 and 24 subspecies of gray wolves are recognized in
+      North America and 7 to 12 are recognized in Eurasia, with 1 in Africa.
+      Wolves were domesticated several thousand years ago, and selective
+      breeding produced dogs.
     </p>
 
     <p>For more information, click the site below</p>
 
-    <a href="https://www.britannica.com/animal/gray-wolf">https://www.britannica.com/animal/gray-wolf</a>
+    <a href="https://www.britannica.com/animal/gray-wolf"
+      >https://www.britannica.com/animal/gray-wolf</a
+    >
   </GreyWolfModal>
-  {/if}
-
-
-  <!--Blue Jay modal content-->
-{#if activateBlueJay}
-<button class="BlueJay-button">  </button>
-
-
-<BlueJayModal bind:activateBlueJay>
-  <h2>Blue Jay</h2>
-  <p>This is the BlueJay modal content.</p>
-
-  <p>This common, large songbird is familiar to many people, with its perky crest; blue, white, and black plumage; and noisy calls. Blue Jays are known for their intelligence and complex social systems with tight family bonds. Their fondness for acorns is credited with helping spread oak trees after the last glacial period.
-  </p>
-
-  <p>For more information, click the site below</p>
-
-  <a href="https://www.allaboutbirds.org/guide/Blue_Jay/overview#">https://www.allaboutbirds.org/guide/Blue_Jay/overview#</a>
-</BlueJayModal>
 {/if}
 
+<!--Blue Jay modal content-->
+{#if activateBlueJay}
+  <button class="BlueJay-button" />
 
+  <BlueJayModal bind:activateBlueJay>
+    <h2>Blue Jay</h2>
+    <p>This is the BlueJay modal content.</p>
 
+    <p>
+      This common, large songbird is familiar to many people, with its perky
+      crest; blue, white, and black plumage; and noisy calls. Blue Jays are
+      known for their intelligence and complex social systems with tight family
+      bonds. Their fondness for acorns is credited with helping spread oak trees
+      after the last glacial period.
+    </p>
+
+    <p>For more information, click the site below</p>
+
+    <a href="https://www.allaboutbirds.org/guide/Blue_Jay/overview#"
+      >https://www.allaboutbirds.org/guide/Blue_Jay/overview#</a
+    >
+  </BlueJayModal>
+{/if}
 
 <!--Deer modal content-->
 {#if activateDeer}
-<button class="Deer-button">  </button>
+  <button class="Deer-button" />
 
+  <DeerModal bind:activateDeer>
+    <h2>White Tailed Deer</h2>
+    <p>
+      The white-tailed deer (Odocoileus virginianus), also known as the Virginia
+      deer, is a common American species within the Cervidae family. Their range
+      extends from the Arctic Circle in western Canada to Peru and Bolivia,
+      spanning 18 degrees south of the Equator. They are recognized by the long
+      white hair on their tail and rump, resembling a signaling flag during
+      flight. These deer are considered part of the New World deer subfamily. .
+    </p>
 
-<DeerModal bind:activateDeer>
-  <h2>White Tailed Deer</h2>
-  <p>The white-tailed deer (Odocoileus virginianus), also known as the Virginia deer, is a common American species within the Cervidae family. Their range extends from the Arctic Circle in western Canada to Peru and Bolivia, spanning 18 degrees south of the Equator. They are recognized by the long white hair on their tail and rump, resembling a signaling flag during flight. These deer are considered part of the New World deer subfamily. 
-    .</p>
-
-
-  <a href="https://www.britannica.com/animal/white-tailed-deer">https://www.britannica.com/animal/white-tailed-deer</a>
-</DeerModal>
+    <a href="https://www.britannica.com/animal/white-tailed-deer"
+      >https://www.britannica.com/animal/white-tailed-deer</a
+    >
+  </DeerModal>
 {/if}
-
 
 <!--Grass modal content-->
 {#if activateGrass}
-<button class="Grass-button">  </button>
+  <button class="Grass-button" />
 
+  <GrassModal bind:activateGrass>
+    <h2>Grass</h2>
+    <p>
+      grass, any of many low, green, nonwoody plants belonging to the grass
+      family (Poaceae), the sedge family (Cyperaceae), and the rush family
+      (Juncaceae). There are many grasslike members of other flowering plant
+      families, but only the approximately 10,000 species in the family Poaceae
+      are true grasses.
+    </p>
 
-<GrassModal bind:activateGrass>
-  <h2>Grass</h2>
-  <p>grass, any of many low, green, nonwoody plants belonging to the grass family (Poaceae), the sedge family (Cyperaceae), and the rush family (Juncaceae). There are many grasslike members of other flowering plant families, but only the approximately 10,000 species in the family Poaceae are true grasses.</p>
-
-
-  <a href="https://www.britannica.com/plant/grass">https://www.britannica.com/plant/grass</a>
-</GrassModal>
+    <a href="https://www.britannica.com/plant/grass"
+      >https://www.britannica.com/plant/grass</a
+    >
+  </GrassModal>
 {/if}
-
-
-
 
 <!--Oak modal content-->
 {#if activateOak}
-<button class="Oak-button">  </button>
+  <button class="Oak-button" />
 
+  <OakModal bind:activateOak>
+    <h2>Northern Read Oak</h2>
+    <p>
+      The Northern Red Oak is a quite tolerant species to urban weather
+      conditions, powerful winds. It can be expected to grow in hardiness zones
+      of 3-8. The canopy of the trees looks excellent when the heavy winds are
+      blowing. The tree does well in these hardy zones with an excellent soil
+      variety, and its main use is for landscaping purposes.
+    </p>
 
-<OakModal bind:activateOak>
-  <h2>Northern Read Oak</h2>
-  <p>The Northern Red Oak is a quite tolerant species to urban weather conditions, powerful winds. It can be expected to grow in hardiness zones of 3-8. The canopy of the trees looks excellent when the heavy winds are blowing. The tree does well in these hardy zones with an excellent soil variety, and its main use is for landscaping purposes. 
-  </p>
-
-
-  <a href="https://localtreeestimates.com/northern-red-oak/">https://localtreeestimates.com/northern-red-oak/</a>
-</OakModal>
+    <a href="https://localtreeestimates.com/northern-red-oak/"
+      >https://localtreeestimates.com/northern-red-oak/</a
+    >
+  </OakModal>
 {/if}
-
 
 <!--RedCurrant modal content-->
 {#if activateRedCurrant}
-<button class="RedCurrant-button">  </button>
+  <button class="RedCurrant-button" />
 
+  <RedCurrantModal bind:activateRedCurrant>
+    <h2>Red Currant</h2>
+    <p>
+      Ribes triste (Red Currant) is a species of shrub in the family
+      gooseberries. They have a self-supporting growth form. They are native to
+      Canada, The Contiguous United States, North America, United States, and
+      Alaska. They have simple, broad leaves and purple flowers. Individuals can
+      grow to 5 feet..
+    </p>
 
-<RedCurrantModal bind:activateRedCurrant>
-  <h2>Red Currant</h2>
-  <p>Ribes triste (Red Currant) is a species of shrub in the family gooseberries. They have a self-supporting growth form. They are native to Canada, The Contiguous United States, North America, United States, and Alaska. They have simple, broad leaves and purple flowers. Individuals can grow to 5 feet..</p>
-
-
-  <a href="https://eol.org/pages/583216">https://eol.org/pages/583216</a>
-</RedCurrantModal>
+    <a href="https://eol.org/pages/583216">https://eol.org/pages/583216</a>
+  </RedCurrantModal>
 {/if}
-
-
-
 
 <!--Spruce modal content-->
 {#if activateSpruce}
-<button class="Spruce-button">  </button>
+  <button class="Spruce-button" />
 
+  <SpruceModal bind:activateSpruce>
+    <h2>Spruce</h2>
+    <p>
+      The ornamental and timber trees known as spruces are native to the
+      temperate and cold regions of the Northern Hemisphere. These cone-bearing
+      evergreen trees are usually pyramid-shaped with whorled branches and thin,
+      scaly bark. When the trees grow singly, their lower branches often touch
+      the ground. The cones are egg-shaped or cylindrical. The spruces vary in
+      height from about 50 to 150 feet (15 to 46 meters).
+    </p>
 
-<SpruceModal bind:activateSpruce>
-  <h2>Spruce</h2>
-  <p>The ornamental and timber trees known as spruces are native to the temperate and cold regions of the Northern Hemisphere. These cone-bearing evergreen trees are usually pyramid-shaped with whorled branches and thin, scaly bark. When the trees grow singly, their lower branches often touch the ground. The cones are egg-shaped or cylindrical. The spruces vary in height from about 50 to 150 feet (15 to 46 meters). 
-  </p>
-
-
-  <a href="https://kids.britannica.com/students/article/spruce/277192">https://kids.britannica.com/students/article/spruce/277192</a>
-</SpruceModal>
+    <a href="https://kids.britannica.com/students/article/spruce/277192"
+      >https://kids.britannica.com/students/article/spruce/277192</a
+    >
+  </SpruceModal>
 {/if}
-
-
-
 
 <style>
   :global(:root) {
