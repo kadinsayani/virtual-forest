@@ -30,8 +30,8 @@
   let forestItems = [
     {
       name: "Grey Wolf",
-      x: 110,
-      y: 703,
+      x: 200,
+      y: 654,
       width: 215,
       height: 100,
       isHighlighted: false,
@@ -39,8 +39,8 @@
     },
     {
       name: "White-tailed Deer",
-      x: 785,
-      y: 639,
+      x: 870,
+      y: 593,
       width: 170,
       height: 100,
       isHighlighted: false,
@@ -49,7 +49,7 @@
     {
       name: "Blue Jays",
       x: 0,
-      y: 192,
+      y: 140,
       width: 499,
       height: 162,
       isHighlighted: false,
@@ -57,8 +57,8 @@
     },
     {
       name: "Spruce Trees",
-      x: 2,
-      y: 654,
+      x: 70,
+      y: 602,
       width: 109,
       height: 111,
       isHighlighted: false,
@@ -66,8 +66,8 @@
     },
     {
       name: "Northern Red Oak Trees",
-      x: 505,
-      y: 197,
+      x: 500,
+      y: 144,
       width: 350,
       height: 500,
       isHighlighted: false,
@@ -75,8 +75,8 @@
     },
     {
       name: "Grass",
-      x: 527,
-      y: 722,
+      x: 511,
+      y: 678,
       width: 225,
       height: 100,
       isHighlighted: false,
@@ -84,8 +84,8 @@
     },
     {
       name: "Redcurrant",
-      x: 1064,
-      y: 681,
+      x: 1150,
+      y: 628,
       width: 57,
       height: 67,
       isHighlighted: false,
@@ -144,7 +144,7 @@
 
   function drawHighlight(item) {
     ctx.fillStyle = "rgba(255, 255, 0, 0.1)";
-    ctx.fillRect(item.x + 50, item.y - 190, item.width, item.height);
+    ctx.fillRect(item.x -30, item.y - 150, item.width, item.height);
   }
 
   function getMousePos(canvas, ctx) {
