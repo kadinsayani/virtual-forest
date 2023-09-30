@@ -8,6 +8,8 @@
   import RedCurrantModal from "./RedCurrantModal.svelte";
   import SpruceModal from "./SpruceModal.svelte";
 
+  import GameOverModal from "./GameOverModal.svelte";
+
   import forest from "$lib/images/forest.png";
   import audio from "$lib/audio/nature.wav";
 
@@ -26,6 +28,7 @@
   let activateOak = false;
   let activateGrass = false;
   let activateRedCurrant = false;
+  let showGameOverModal = false;
 
   let forestItems = [
     {
@@ -144,7 +147,7 @@
 
   function drawHighlight(item) {
     ctx.fillStyle = "rgba(255, 255, 0, 0.1)";
-    ctx.fillRect(item.x -30, item.y - 150, item.width, item.height);
+    ctx.fillRect(item.x - 30, item.y - 150, item.width, item.height);
   }
 
   function getMousePos(canvas, ctx) {
@@ -226,6 +229,12 @@
     }
     if (key === "White-tailed Deer") {
       populationCounts["Grass"] = Math.floor(value * 0.9);
+    }
+  }
+
+  $: {
+    if (foundItems === 7) {
+      showGameOverModal = true;
     }
   }
 </script>
@@ -406,6 +415,11 @@
       >https://kids.britannica.com/students/article/spruce/277192</a
     >
   </SpruceModal>
+{/if}
+
+<!--Game Over modal -->
+{#if showGameOverModal}
+  <GameOverModal show={showGameOverModal} />
 {/if}
 
 <style>
