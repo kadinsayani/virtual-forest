@@ -184,6 +184,10 @@
     }
   }
 
+  function calculateProgress() {
+    return (foundItems / forestItems.length) * 100;
+  }
+
   function activateModal(event) {
     const mousePos = getMousePos(canvas, event);
 
@@ -245,6 +249,11 @@
     <p>Items found: {foundItems}/{forestItems.length}</p>
   </div>
 
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress" style="width: {calculateProgress()}%" />
+  </div>
+
   <audio src={audio} autoplay loop />
   <div class="canvas-sliders-container">
     <canvas bind:this={canvas} width="1200px" height="600px" />
@@ -263,7 +272,7 @@
             bind:value={populationCounts[key]}
             on:change={sliderOnChange}
           />
-          <label for={key}>{key}:{value}</label>
+          <label for={key}>{key} : {value}</label>
         </div>
       {/each}
     </div>
@@ -299,8 +308,6 @@
 
   <BlueJayModal bind:activateBlueJay>
     <h2>Blue Jay</h2>
-    <p>This is the BlueJay modal content.</p>
-
     <p>
       This common, large songbird is familiar to many people, with its perky
       crest; blue, white, and black plumage; and noisy calls. Blue Jays are
@@ -470,5 +477,25 @@
     display: flex;
     flex-direction: row;
     gap: 15px;
+  }
+
+  .population-label {
+    font-size: larger;
+  }
+  .progress-bar {
+    width: 40%;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .progress {
+    height: 100%;
+    background-color: #4caf50; /* Green color for the filled portion */
+    border-radius: 5px;
+    transition: width 0.3s ease;
   }
 </style>
