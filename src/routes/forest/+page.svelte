@@ -458,6 +458,7 @@
     align-items: center;
     justify-content: center;
     gap: 35px;
+    margin-left: 20px;
   }
 
   .slider {
