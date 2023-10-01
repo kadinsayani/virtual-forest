@@ -283,11 +283,11 @@
   <button class="greyWolf-button" />
 
   <GreyWolfModal bind:activateGreyWolf>
-    <h2>Gray Wolf</h2>
+    <h2>Grey Wolf</h2>
     <p>
-      Gray wolf, (Canis lupus), also called timber wolf, largest wild member of
+      Grey wolf, (Canis lupus), also called timber wolf, largest wild member of
       the dog family (Canidae). It inhabits vast areas of the Northern
-      Hemisphere. Between 5 and 24 subspecies of gray wolves are recognized in
+      Hemisphere. Between 5 and 24 subspecies of grey wolves are recognized in
       North America and 7 to 12 are recognized in Eurasia, with 1 in Africa.
       Wolves were domesticated several thousand years ago, and selective
       breeding produced dogs.
@@ -295,8 +295,8 @@
 
     <p>For more information, click the site below</p>
 
-    <a href="https://www.britannica.com/animal/gray-wolf"
-      >https://www.britannica.com/animal/gray-wolf</a
+    <a href="https://www.britannica.com/animal/grey-wolf"
+      >https://www.britannica.com/animal/grey-wolf</a
     >
   </GreyWolfModal>
 {/if}
@@ -465,6 +465,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 0.85rem;
   }
 
   .canvas-sliders-container {
