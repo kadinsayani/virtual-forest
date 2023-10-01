@@ -31,7 +31,7 @@
 <style>
   .dialog-content {
     padding: 1em;
-    position: relative;
+    position: center;
     margin-left: 1%;
     margin-bottom: 1%;
   }
