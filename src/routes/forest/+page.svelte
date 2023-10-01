@@ -184,10 +184,6 @@
     }
   }
 
-  function calculateProgress() {
-    return (foundItems / forestItems.length) * 100;
-  }
-
   function activateModal(event) {
     const mousePos = getMousePos(canvas, event);
 
@@ -251,7 +247,10 @@
 
   <!-- Progress bar -->
   <div class="progress-bar">
-    <div class="progress" style="width: {calculateProgress()}%" />
+    <div
+      class="progress"
+      style="width: {(foundItems / forestItems.length) * 100}%"
+    />
   </div>
 
   <audio src={audio} autoplay loop />
@@ -458,7 +457,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 35px;
   }
 
   .slider {
@@ -476,18 +475,20 @@
   .score-container {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
+    font-size: larger;
   }
 
   .population-label {
     font-size: larger;
   }
+
   .progress-bar {
     width: 40%;
-    height: 20px;
+    height: 25px;
     background-color: #ccc;
-    border-radius: 5px;
-    margin-top: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
     margin-bottom: 20px;
     overflow: hidden;
   }
@@ -495,7 +496,7 @@
   .progress {
     height: 100%;
     background-color: #4caf50; /* Green color for the filled portion */
-    border-radius: 5px;
+    border-radius: 10px;
     transition: width 0.3s ease;
   }
 </style>
